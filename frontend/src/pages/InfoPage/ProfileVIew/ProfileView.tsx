@@ -7,7 +7,6 @@ import  { API_ENDPOINTS, HOME_ROUTE } from "../../../env";
 
 import ButtonC2 from "../../../components/Buttons/ButtonC2/ButtonC2";
 import ButtonDownloadFile from "../../../components/Buttons/ButtonDownloadFile/ButtonDownloadFile";
-import ButtonRefreshAiProfile from "./ButtonRefreshAiProfile/ButtonRefreshAiProfile";
 
 interface WorkExperience { 
     years: string; 
@@ -284,16 +283,6 @@ const ProfileView = ({ id }: ProfileViewProps) => {
         setShowExportOptions(false); 
     }, [user, id]);
 
-    const handleRefreshError = useCallback((message: string) => {
-        const errorMessage = `${tp('refreshErrorPrefix')}: ${message}`;
-        setError(errorMessage);
-        alert(errorMessage);
-    }, [tp]);
-
-    const handleRefreshSuccess = useCallback((newData: UserData) => {
-        setUser(newData);
-        alert(tp('refreshSuccess'));
-    }, [tp])
 
     if (isTotalLoading) return <div style={{ color: 'var(--c1)', padding: '20px', textAlign: 'center' }}>{tp('loading')}</div>; 
     if (error) return <div style={{ color: 'var(--alert)', padding: '20px', border: '1px solid var(--alert)', margin: '20px', borderRadius: 'var(--radius)' }}>{tp('errorPrefix')}: {error}</div>;
@@ -374,18 +363,6 @@ const ProfileView = ({ id }: ProfileViewProps) => {
                                 </button>
                             ))}
                         </div>
-                    )}
-
-                    {user && (
-                        <ButtonRefreshAiProfile
-                            candidateId={user.id}
-                            onRefreshSuccess={handleRefreshSuccess}
-                            onRefreshError={handleRefreshError}
-
-                            prompt={tp('defaultRefreshPrompt')} 
-                            websearch={false} 
-                            disabled={isDeleting}
-                        />
                     )}
 
                     {primaryFile && downloadUrl && (
