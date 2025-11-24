@@ -1,0 +1,24 @@
+:root{
+    --c1: #2D2EFA; /* Primary */
+    --c2: #2D6EFA; /* Secondary */
+    --c3: #702DFA; /* Accent A */
+    --c4: #2DAEFA; /* Accent B */
+    --c5: #B32DFA; /* Accent C */
+    --c6: #9D9DFC; /* Muted */
+    --alert: #FA2D2D; /* Alert */
+    --bg: #f0f6ff;
+    --text: #0a0a0a;
+    --text-alt: #f0f6ff;
+    --radius: 12px;
+    --gap: 18px;
+    --font: 'Inter', 'Segoe UI', 'Roboto', 'Helvetica Neue', Arial, sans-serif;
+    --navbar-height: 3.8rem;
+}
+
+.body {
+    margin: 0;
+    padding: 0;
+    background-color: var(--bg);
+    font-family: var(--font);
+    
+}

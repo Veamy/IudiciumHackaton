@@ -1,0 +1,104 @@
+/* UploadedFileListViewStyle.css */
+.UploadedFileListView {
+  margin-top: 20px;
+  font-family: var(--font);
+}
+
+.UploadedFileListView:empty {
+  display: none;
+}
+
+.UploadedFileListView ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: var(--gap);
+}
+
+.UploadedFileListView li {
+  background: white;
+  border-radius: var(--radius);
+  padding: 16px 18px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  border: 2px solid transparent;
+  transition: all 0.25s ease;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  animation: fadeInUp 0.4s ease forwards;
+  opacity: 0;
+  transform: translateY(15px);
+}
+
+.UploadedFileListView li:nth-child(1) { animation-delay: 0.05s; }
+.UploadedFileListView li:nth-child(2) { animation-delay: 0.10s; }
+.UploadedFileListView li:nth-child(3) { animation-delay: 0.15s; }
+.UploadedFileListView li:nth-child(4) { animation-delay: 0.20s; }
+.UploadedFileListView li:nth-child(5) { animation-delay: 0.25s; }
+.UploadedFileListView li:nth-child(n+6) { animation-delay: 0.30s; }
+
+@keyframes fadeInUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.UploadedFileListView li:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 24px rgba(45, 46, 250, 0.15);
+  border-color: var(--c1);
+}
+
+.UploadedFileListView li::before {
+  content: "";
+  width: 48px;
+  height: 48px;
+  min-width: 48px;
+  background: var(--c1);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  color: white;
+  font-weight: bold;
+  background: linear-gradient(135deg, var(--c1), var(--c2));
+  box-shadow: 0 4px 10px rgba(45, 46, 250, 0.25);
+}
+
+.UploadedFileListView li:hover::before {
+  background: linear-gradient(135deg, var(--c3), var(--c5));
+}
+
+/* Іконки за типом файлу (опціонально, виглядає круто) */
+.UploadedFileListView li[data-type="image"]::before   { content: "🖼"; }
+.UploadedFileListView li[data-type="video"]::before   { content: "🎥"; }
+.UploadedFileListView li[data-type="audio"]::before   { content: "🎵"; }
+.UploadedFileListView li[data-type="pdf"]::before     { content: "📄"; }
+.UploadedFileListView li[data-type="document"]::before{ content: "📝"; }
+.UploadedFileListView li[data-type="archive"]::before { content: "📦"; }
+/* За замовчуванням — універсальна іконка */
+.UploadedFileListView li::before { content: "📎"; }
+
+.file-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.file-name {
+  font-weight: 600;
+  font-size: 16px;
+  color: var(--text);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin-bottom: 4px;
+}
+
+.file-size {
+  font-size: 13px;
+  color: var(--c6);
+}

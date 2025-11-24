@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <style>
+        @page { size: A4; margin: 20mm; }
+        body {
+            font-family: 'Liberation Sans', 'DejaVu Sans', sans-serif;
+            font-size: 12px;
+            line-height: 1.5;
+            color: #333;
+        }
+        h1 { font-size: 24px; color: #2c3e50; margin-bottom: 5px; text-align: center; text-transform: uppercase; }
+        h2 { font-size: 16px; color: #2980b9; border-bottom: 2px solid #2980b9; padding-bottom: 5px; margin-top: 20px; }
+        h3 { font-size: 14px; font-weight: bold; margin-bottom: 2px; margin-top: 10px; }
+
+        .contacts { text-align: center; color: #555; margin-bottom: 20px; }
+        .ai-box { background-color: #f8f9fa; border: 1px solid #e9ecef; padding: 15px; border-radius: 5px; margin-bottom: 20px; }
+        .score-high { color: #27ae60; font-weight: bold; font-size: 18px; }
+        .score-row { display: flex; justify-content: space-between; border-bottom: 1px solid #ddd; padding: 5px 0; }
+        .risk-box { background-color: #fff5f5; border-left: 4px solid #e74c3c; padding: 10px; margin-top: 10px; }
+
+        .skills-container { margin-top: 10px; }
+        .skill-tag {
+            background-color: #eef2f3; color: #2c3e50;
+            padding: 3px 8px; border-radius: 4px;
+            display: inline-block; margin: 2px; font-size: 11px; border: 1px solid #ccd1d1;
+        }
+
+        .job-header { display: flex; justify-content: space-between; align-items: baseline; }
+        .company { font-weight: bold; color: #2c3e50; }
+        .position { font-style: italic; }
+        .meta { color: #777; font-size: 11px; }
+    </style>
+</head>
+<body>
+    <h1>{{ candidate.full_name }}</h1>
+    <div class="contacts">
+        {{ candidate.contacts.email }} • {{ candidate.contacts.phone }} • {{ candidate.contacts.location }}
+        <br>
+        Дата народження: {{ candidate.date_of_birth }}
+    </div>
+
+    <div class="ai-box">
+        <div style="text-align: center; margin-bottom: 10px;">
+            Фінальний рейтинг відповідності:
+            <span class="score-high">{{ position_relevance.overall_score }}/10</span>
+        </div>
+
+        <p><b>Висновок:</b> <i>{{ summary_conclusion }}</i></p>
+
+        <div style="margin-top: 10px; font-size: 11px;">
+            <b>Деталі оцінки:</b><br>
+            Trust Score: {{ evaluation.trust_score }} |
+            Integrity: {{ evaluation.integrity_score }} |
+            Relevance: {{ evaluation.relevance_to_position_score }}
+        </div>
+
+        {% if risk_analysis.notes or risk_analysis.conflict_of_interest %}
+        <div class="risk-box">
+            <b>⚠ ЗОНА РИЗИКУ:</b><br>
+            {{ risk_analysis.notes }}
+        </div>
+        {% endif %}
+    </div>
+
+    {% if candidate.skills %}
+    <h2>Технічні Навички</h2>
+    <div class="skills-container">
+        {% for skill in candidate.skills %}
+        <span class="skill-tag">{{ skill }}</span>
+        {% endfor %}
+    </div>
+    {% endif %}
+
+    {% if candidate.work_experience %}
+    <h2>Досвід Роботи</h2>
+    {% for job in candidate.work_experience %}
+    <div style="margin-bottom: 15px;">
+        <div class="job-header">
+            <span class="company">{{ job.company }}</span>
+            <span class="meta">{{ job.years }} ({{ job.duration_years }} років)</span>
+        </div>
+        <div class="position">{{ job.position }} | {{ job.industry }}</div>
+        <p style="margin-top: 5px;">{{ job.responsibilities }}</p>
+    </div>
+    {% endfor %}
+    {% endif %}
+
+    {% if candidate.education %}
+    <h2>Освіта</h2>
+    {% for edu in candidate.education %}
+    <div>
+        <b>{{ edu.institution }}</b> — {{ edu.degree }} <br>
+        <span class="meta">Спеціалізація: {{ edu.specialization }} ({{ edu.years }})</span>
+    </div>
+    <br>
+    {% endfor %}
+    {% endif %}
+
+</body>
+</html>

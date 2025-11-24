@@ -1,0 +1,35 @@
+.switcher-header {
+  display: flex;
+  border-bottom: 2px solid var(--c6);
+  margin: 0 16px 24px 16px;
+  padding: 0;
+}
+
+.switcher-btn {
+  all: unset;
+  flex: 1;
+  padding: 14px 0;
+  text-align: center;
+  font-weight: 600;
+  font-size: 15px;
+  color: var(--c6);
+  cursor: pointer;
+  transition: none; /* ніяких анімацій */
+  user-select: none;
+}
+
+.switcher-btn.active {
+  color: var(--c1);
+  border-bottom: 3px solid var(--c1);
+}
+
+/* Фокус для доступності — теж строго */
+.switcher-btn:focus-visible {
+  outline: 2px solid var(--c4);
+  outline-offset: -2px;
+}
+
+.button-create-new-item {
+  margin-bottom: 15px; 
+  text-align: center; 
+}

@@ -1,0 +1,8 @@
+from enum import Enum
+
+
+class ExportFormat(str, Enum):
+    JSON = "json"
+    CSV = "csv"
+    DOCX = "word"
+    PDF = "pdf"

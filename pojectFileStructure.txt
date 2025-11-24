@@ -1,0 +1,153 @@
+.
+├── backend
+│   ├── api
+│   │   ├── ai_api.py
+│   │   ├── candidate_api.py
+│   │   ├── __init__.py
+│   │   ├── minio_api.py
+│   │   └── position_api.py
+│   ├── core
+│   │   ├── config.py
+│   │   ├── cors.py
+│   │   ├── __init__.py
+│   │   ├── lifespan.py
+│   │   └── prompt.py
+│   ├── db
+│   │   ├── __init__.py
+│   │   └── session.py
+│   ├── docker-compose.yaml
+│   ├── Dockerfile
+│   ├── env_example
+│   ├── main.py
+│   ├── models
+│   │   ├── candidate_file.py
+│   │   ├── candidate_profile.py
+│   │   ├── __init__.py
+│   │   └── position.py
+│   ├── object_storage
+│   │   ├── __init__.py
+│   │   └── minio_client.py
+│   ├── README.md
+│   ├── requirements.txt
+│   ├── schemas
+│   │   ├── ai_schemas.py
+│   │   ├── candidate_schemas.py
+│   │   ├── export_format.py
+│   │   ├── file_schemas.py
+│   │   ├── __init__.py
+│   │   ├── position_schemas.py
+│   │   └── youcontrol_schema.py
+│   ├── services
+│   │   ├── ai_service.py
+│   │   ├── candidate_service.py
+│   │   ├── export_service.py
+│   │   ├── file_service.py
+│   │   ├── __init__.py
+│   │   ├── minio_service.py
+│   │   ├── position_service.py
+│   │   └── youcontrol_service.py
+│   └── template
+│       ├── candidate_template_docx.docx
+│       └── candidate_template_pdf.html
+├── docker-compose.yaml
+├── frontend
+│   ├── dockerfile
+│   ├── eslint.config.js
+│   ├── index.html
+│   ├── ngix.conf
+│   ├── package.json
+│   ├── package-lock.json
+│   ├── public
+│   │   ├── img
+│   │   │   └── homeIlustration.jpeg
+│   │   └── vite.svg
+│   ├── README.md
+│   ├── src
+│   │   ├── App.css
+│   │   ├── AppRoutes.tsx
+│   │   ├── App.tsx
+│   │   ├── client
+│   │   │   └── client.ts
+│   │   ├── components
+│   │   │   ├── Buttons
+│   │   │   │   ├── ButtonC1
+│   │   │   │   │   ├── ButtonC1.tsx
+│   │   │   │   │   └── ButtonsC1Styles.css
+│   │   │   │   ├── ButtonC2
+│   │   │   │   │   ├── ButtonC2Style.css
+│   │   │   │   │   └── ButtonC2.tsx
+│   │   │   │   └── ButtonDownloadFile
+│   │   │   │       └── ButtonDownloadFile.tsx
+│   │   │   ├── InputBlock
+│   │   │   │   └── InputBock.tsx
+│   │   │   ├── ItemLink
+│   │   │   │   ├── ItemLinkStyle.css
+│   │   │   │   └── ItemLink.tsx
+│   │   │   ├── ItemList
+│   │   │   │   ├── ItemListStyle.css
+│   │   │   │   └── ItemList.tsx
+│   │   │   ├── LanguageSwitcher
+│   │   │   │   ├── LanguageSwitcherStyle.css
+│   │   │   │   └── LanguageSwitcher.tsx
+│   │   │   ├── PositionChoiseListView
+│   │   │   │   └── PositionChoiseListView.tsx
+│   │   │   ├── PositionParameterFormView
+│   │   │   │   ├── ParametrPositionsFormViewStyle.css
+│   │   │   │   └── PositionParameterFormView.tsx
+│   │   │   ├── README.md
+│   │   │   ├── SrctionHeader
+│   │   │   │   └── SectionHeader.tsx
+│   │   │   ├── UploadedFileListView
+│   │   │   │   ├── UploadedFileListViewStyle.css
+│   │   │   │   └── UploadedFileListView.tsx
+│   │   │   └── UploadFileButton
+│   │   │       ├── UploadFIleButtonStyle.css
+│   │   │       └── UploadFileButton.tsx
+│   │   ├── env.ts
+│   │   ├── i18n
+│   │   │   └── index.tsx
+│   │   ├── index.css
+│   │   ├── locales
+│   │   │   ├── eng
+│   │   │   │   └── translation.json
+│   │   │   └── ukr
+│   │   │       └── translation.json
+│   │   ├── main.tsx
+│   │   ├── pages
+│   │   │   ├── Home
+│   │   │   │   ├── HomePage.tsx
+│   │   │   │   └── HomeStyle.css
+│   │   │   ├── InfoPage
+│   │   │   │   ├── InfoPageStyle.css
+│   │   │   │   ├── InfoPage.tsx
+│   │   │   │   ├── LeftBar
+│   │   │   │   │   ├── LeftBarStyle.css
+│   │   │   │   │   └── LeftBar.tsx
+│   │   │   │   ├── NewPositionCreateView
+│   │   │   │   │   └── NewPositionCreateView.tsx
+│   │   │   │   ├── NewProfileCreateView
+│   │   │   │   │   └── NewProfileCreateView.tsx
+│   │   │   │   ├── PositionView
+│   │   │   │   │   └── PositionView.tsx
+│   │   │   │   └── ProfileVIew
+│   │   │   │       └── ProfileView.tsx
+│   │   │   └── README.md
+│   │   ├── ROUTES.tsx
+│   │   ├── types
+│   │   │   ├── i18n.d.ts
+│   │   │   ├── Message.tsx
+│   │   │   ├── PositionParameter.ts
+│   │   │   └── Position.ts
+│   │   └── widgets
+│   │       └── CustomNavbar
+│   │           ├── CustomNavbar.css
+│   │           └── CustomNavbar.tsx
+│   ├── src.zip
+│   ├── tsconfig.app.json
+│   ├── tsconfig.json
+│   ├── tsconfig.node.json
+│   └── vite.config.ts
+├── pojectFileStructure
+└── README.md
+
+44 directories, 107 files

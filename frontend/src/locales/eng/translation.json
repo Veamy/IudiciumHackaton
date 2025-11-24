@@ -1,0 +1,156 @@
+{
+  "HomePage": {
+    "hz": "Iudicium — assessment that sees deeper.",
+    "guide-button-text": "Iudicium User Guide",
+    "analyze-button-text": "Analyze Resume",
+    "mini-descrioption": "Iudicium — a resume analysis tool that examines open sources to provide in-depth candidate assessment.",
+    "about-teame": "The Basement Dwellers team that worked from the basement"
+  },
+  "UploadInfoPage": {
+    "upload-file-button-text": "Upload files"
+  },
+  "ProfileComponent": {
+    "no-profile": "No profiles available. Create a new profile to see it here.",
+    "loading-error": "Failed to load profiles.",
+    "new-profile-button-text": "Create New Profile"
+  },
+  "NewPositionCreateView": {
+    "title": "Create New Position",
+    "basicInfo": "Basic Information",
+    "positionName": "Position Name*",
+    "characters": "characters",
+    "parameters": "Parameters",
+    "addParameter": "+ Add Parameter",
+    "noParameters": "No parameters yet. Click the button above to add.",
+    "createPosition": "Create Position",
+    "cancel": "Cancel",
+    "debugJson": "Current JSON (debug)",
+    "errors": {
+      "nameRequired": "Position name is required",
+      "nameMaxLength": "Maximum 100 characters",
+      "atLeastOneParameter": "Add at least one parameter",
+      "titleRequired": "Title is required",
+      "pointsNonNegative": "Points cannot be negative"
+    }
+  },
+  "PositionParameterFormView": {
+    "parameterForm": {
+      "title": "Parameter",
+      "parameterTitle": "Parameter Title*",
+      "parameterTitlePlaceholder": "E.g. Communication Skills",
+      "description": "Description",
+      "descriptionPlaceholder": "Describe what is evaluated by this parameter",
+      "points": "Points*",
+      "removeButton": "Remove parameter"
+    }
+  },
+  "PositionView": {
+      "loading": "Loading...",
+      "errorPrefix": "Error",
+      "notFound": "Position data not found.",
+      "parametersTitle": "Evaluation Parameters",
+      "noParameters": "No evaluation parameters defined for this position.",
+      "weight": "Weight",
+      "noDescription": "Description missing.",
+      "debugJson": "Raw JSON Data (for debug)",
+      "deleteButton": "Delete Position",
+      "deleting": "Deleting...",
+      "confirmDeletePosition": "Are you sure you want to delete the position \"{name}\"? This action cannot be undone.",
+      "deletePositionSuccess": "Position \"{name}\" successfully deleted.",
+      "errors": {
+        "failedToLoad": "Failed to load",
+        "unknownError": "Unknown error during loading",
+        "failedToDeletePosition": "Failed to delete position.",
+        "unknownDeleteError": "Unknown error during deletion."
+      }
+  },
+  "LeftBar": {
+    "profilesTab": "Profiles",
+    "positionsTab": "Positions",
+    "createNewProfileButton": "Create New Profile",
+    "createNewPositionButton": "Create New Position"
+  },
+  "ProfileView": {
+    "position": "Evaluation Position",
+    "positionError": "Error loading position name",
+    "positionNotFound": "Position name not found in list",
+    "positionNotAssigned": "Position not assigned",
+    "positionUnknown": "Unknown position",
+    "loading": "Loading profile...",
+    "errorPrefix": "Error",
+    "notFound": "Profile data not found.",
+    "candidateId": "Candidate ID",
+    "summaryTitle": "Summary and Conclusion",
+    "basicInfo": "Basic Information",
+    "birthDate": "Date of Birth",
+    "contacts": "Contacts",
+    "location": "Location",
+    "additionalInfo": "Additional Info",
+    "skillsTitle": "Skills",
+    "experienceTitle": "Work Experience",
+    "educationTitle": "Education and Certificates",
+    "certifications": "Certifications",
+    "analysisTitle": "Assessment and Analysis",
+    "keyIndicators": "Key Indicators",
+    "relevanceTitle": "Position Relevance",
+    "riskTitle": "Risk Analysis",
+    "deleteButton": "Delete Profile",
+    "deleting": "Deleting...",
+    "debugJson": "Raw JSON Data (for debug)",
+    "yearsAbbreviation": "yrs",
+    "responsibilities": "Responsibilities",
+    "confirmDelete": "Are you sure you want to delete the candidate profile \"{name}\"? This action cannot be undone.",
+    "deleteSuccess": "Candidate profile \"{name}\" successfully deleted.",
+    "deleteErrorPrefix": "Profile deletion error",
+    "exportButton": "Export Profile",
+    "exportAs": "Export as",
+
+    "labels": {
+      "trust": "Trust Score",
+      "integrity": "Integrity Score",
+      "overall": "Overall Index",
+      "leadership": "Leadership",
+      "relevance": "Relevance"
+    },
+    "relevance": {
+      "overallScore": "Overall Score",
+      "experience": "Experience Relevance",
+      "competencies": "Competency Match",
+      "level": "Level Match"
+    },
+    "risk": {
+      "attention": "ATTENTION",
+      "frequentJobChanges": "Frequent Job Changes",
+      "competencyMismatch": "Competency Mismatch",
+      "yes": "Yes",
+      "no": "No"
+    },
+    "errors": {
+      "failedToLoad": "Failed to load",
+      "unknownError": "Unknown error during loading",
+      "failedToDelete": "Deletion failed.",
+      "unknownDeleteError": "Unknown error during deletion."
+    }
+  },
+  "ButtonDownloadFile": {
+    "downloadFile": "Download file",
+    "downloadDisabled": "Download link is missing"
+  },
+  "NewProfileCreateView": {
+    "title": "Create New Profile",
+    "promptLabel": "Prompt Text:",
+    "promptPlaceholder": "Enter any additional instructions for the AI.",
+    "uploadButtonText": "Upload Files (Resume/CV)",
+    "clearAllButton": "Clear All",
+    "createProfileButton": "Create Profile",
+    "sending": "Creating...",
+    "defaultPrompt": "Create candidate profile based on the provided documents.",
+    "errors": {
+      "selectFileAlert": "Please select at least one file.",
+      "failedToCreateProfile": "Failed to create profile.",
+      "idMissingAlert": "Profile created, but ID is missing from the response.",
+      "unknownUploadError": "Unknown error during file upload.",
+      "uploadErrorPrefix": "An error occurred"
+    }
+  }
+}

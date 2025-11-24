@@ -1,0 +1,126 @@
+.custom-navbar {
+  position: sticky;
+  top: 0;
+  z-index: 1050;
+  background-color: var(--c6);
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+  transition: all 0.3s ease;
+  font-family: inherit;
+  flex-shrink: 0; 
+  height: var(--navbar-height);
+}
+
+.navbar-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 var(--gap);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.navbar-brand {
+  color: var(--c1);
+  font-weight: 900;
+  font-size: 1.5rem;
+  padding: 0.5rem 1rem;
+  text-decoration: none;
+  transition: color 0.2s ease, transform 0.2s ease;
+  letter-spacing: 1.5px;
+}
+
+.navbar-brand:hover {
+  color: color-mix(in srgb, var(--c1) 80%, white);
+  transform: translateY(-1px);
+}
+
+.navbar-menu.desktop {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+}
+
+.navbar-menu.mobile {
+  position: fixed;
+  top: 4.5rem;
+  left: 0;
+  right: 0;
+  background-color: var(--c6);
+  padding: 2rem var(--gap);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.25rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
+  transform: translateY(-100%);
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.navbar-menu.mobile.open {
+  transform: translateY(0);
+  opacity: 1;
+  visibility: visible;
+}
+
+.navbar-toggler {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  gap: 6px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 10px;
+  border-radius: 8px;
+  transition: all 0.2s ease;
+}
+
+.navbar-toggler span {
+  width: 30px;
+  height: 3px;
+  background-color: var(--c1);
+  border-radius: 3px;
+  transition: all 0.3s ease;
+  transform-origin: center;
+}
+
+.navbar-toggler.open span:nth-child(1) {
+  transform: translateY(9px) rotate(45deg);
+}
+
+.navbar-toggler.open span:nth-child(2) {
+  opacity: 0;
+}
+
+.navbar-toggler.open span:nth-child(3) {
+  transform: translateY(-9px) rotate(-45deg);
+}
+
+.navbar-toggler:hover {
+  background-color: rgba(45, 174, 250, 0.08);
+}
+
+.language-switcher-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+@media (max-width: 768px) {
+  .navbar-toggler {
+    display: flex;
+  }
+  .navbar-menu.desktop {
+    display: none;
+  }
+}
+
+@media (min-width: 769px) {
+  .navbar-menu.mobile {
+    display: none;
+  }
+}

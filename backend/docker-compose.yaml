@@ -1,0 +1,38 @@
+name: iudicium
+
+services:
+  backend:
+    build: .
+    container_name: iudicium-backend
+    ports:
+      - "${APP_PORT}:8000"
+    restart: always
+    depends_on:
+      - db
+      - minio
+    env_file:
+      - .env
+  db:
+    image: postgres:17
+    container_name: postgres_17
+    restart: always
+    ports:
+      - "${POSTGRES_EXTERNAL_PORT}:5432"
+    env_file:
+      - .env
+    volumes:
+      - pg_data:/var/lib/postgresql/data
+  minio:
+    image: minio/minio
+    command: server /data --console-address ":9001"
+    ports:
+      - "${MINIO_EXTERNAL_PORT}:9000"
+      - "${MINIO_EXTERNAL_PORT_APP}:9001"
+    env_file:
+      - .env
+    volumes:
+      - minio_data:/data
+
+volumes:
+  pg_data:
+  minio_data:

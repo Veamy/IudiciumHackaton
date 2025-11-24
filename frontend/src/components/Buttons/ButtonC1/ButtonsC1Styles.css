@@ -1,0 +1,30 @@
+.ButtonsC1 {
+  background-color: var(--c1);
+  color: var(--text-alt);
+  border: none;
+  padding: 12px 28px;
+  border-radius: 12px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  min-width: 140px;
+  text-align: center;
+}
+
+.ButtonsC1:hover {
+  background-color: color-mix(in srgb, var(--c1) 90%, black);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.ButtonsC1:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.ButtonsC1:focus-visible {
+  outline: 2px solid var(--c1);
+  outline-offset: 2px;
+}

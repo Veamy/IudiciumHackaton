@@ -1,0 +1,50 @@
+.MainBlock {
+    position: relative;
+    height: calc(100vh - var(--navbar-height));
+    background: url('/img/homeIlustration.jpeg') center/cover no-repeat;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    color: white;
+    width: 100%;
+}
+
+.MainBlock::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: rgba(45, 174, 250, 0.6);
+    z-index: 1;
+    pointer-events: none;
+}
+
+.MainBlock > * {
+    position: relative;
+    z-index: 2;
+}
+
+.text-block {
+    font-weight: 700;
+    font-size: clamp(2.5rem, 8vw, 4.5rem); 
+    text-align: center;
+    margin: 0 1rem 2rem;
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+    color: var(--text, white);
+}
+
+.buttons-group {
+    display: flex;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+    justify-content: center;
+    z-index: 2;
+}
+
+
+.ButtonsC1,
+.ButtonsC2 {
+    position: relative;
+    z-index: 2;
+}
