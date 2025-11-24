@@ -1,0 +1,38 @@
+.refreshButton {
+    /* Базові стилі, схожі на ButtonC2 */
+    padding: 10px 15px;
+    border: none;
+    border-radius: var(--radius);
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 1em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    transition: background-color 0.2s, opacity 0.2s;
+    color: var(--text-alt); 
+}
+
+.refreshButton:hover:not(:disabled) {
+    background-color: color-mix(in srgb, var(--c3) 80%, black);
+}
+
+.refreshButton:disabled {
+    cursor: not-allowed;
+    opacity: 0.6;
+}
+
+.spinner {
+    border: 3px solid rgba(255, 255, 255, 0.3);
+    border-top: 3px solid var(--text-alt);
+    border-radius: 50%;
+    width: 16px;
+    height: 16px;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}

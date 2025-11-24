@@ -1,4 +1,3 @@
-import urllib
 from urllib.parse import quote
 from uuid import UUID, uuid4
 from asyncio import to_thread, gather
@@ -20,12 +19,13 @@ async def _upload_file(file: UploadFile):
     await file.seek(0)
     file_id = uuid4()
     file_id = str(file_id)
-    file_extension = await _get_file_extension(file)
+    content = await file.read()
+    file_extension = await _get_file_extension(content, file.filename)
+    await file.seek(0)
     await to_thread(
         minio_client.put_object, settings.MINIO_BUCKET, file_id + file_extension, file.file, file.size,
         file.content_type)
     return CandidateFile(id=file_id, file_name=file.filename, content_type=file.content_type, file_size=file.size)
-
 
 async def upload_files(files: List[UploadFile]):
     upload_files = []

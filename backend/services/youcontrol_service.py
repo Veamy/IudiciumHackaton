@@ -85,15 +85,22 @@ ENDPOINTS_CONFIG = {
 async def check_candidate(
         surname: str,
         name: str,
-        patronymic: str,
+        patronymic: str = None,
         birth_date: Optional[str] = None  # 1. Додаємо аргумент дати
 ) -> List[CheckResult]:
+    print("HELLO YOUCONTROL")
     # Параметри для запиту (YouControl очікує саме такі ключі)
-    params = {
-        "surname": surname,
-        "firstname": name,
-        "patronymic": patronymic
-    }
+    if patronymic is not None:
+        params = {
+            "surname": surname,
+            "firstname": name,
+            "patronymic": patronymic
+        }
+    else:
+        params = {
+            "surname": surname,
+            "firstname": name,
+        }
 
     async with httpx.AsyncClient(timeout=30.0) as client:
         tasks = [
@@ -112,6 +119,7 @@ async def check_candidate(
     # 4. Фільтрація для LLM
     # Повертаємо тільки ті результати, де match_found = True.
     return [res for res in results if res.match_found]
+
 
 async def _fetch(
         client: httpx.AsyncClient,
@@ -188,6 +196,7 @@ async def _fetch_details(client: httpx.AsyncClient, url_template: str, item_id: 
         if response.status_code == 200:
             return response.json()
     except Exception:
+        print("You Control Exception")
         pass
     return None
 

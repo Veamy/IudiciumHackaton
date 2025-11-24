@@ -22,6 +22,7 @@ class Settings(BaseSettings):
     MINIO_BUCKET: str
     MINIO_SECURE: bool
     CORS_ORIGINS: List[str]
+    YOUCONTROL_API_KEY: str
 
     class Config:
         env_file = ".env"

@@ -1,73 +1,190 @@
-# React + TypeScript + Vite
+# Frontend Pages
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+> **Location:** `frontend/src/pages/README.md`
 
-Currently, two official plugins are available:
+Page components that define the main views and routing structure of the Iudicium application.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Page Structure
 
-## React Compiler
-
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```
+pages/
+├── Home/
+│   ├── HomePage.tsx      # Landing page
+│   └── HomeStyle.css
+└── InfoPage/
+    ├── InfoPage.tsx      # Main application layout
+    ├── InfoPageStyle.css
+    ├── LeftBar/          # Sidebar navigation
+    ├── NewProfileCreateView/   # Create candidate profile
+    ├── NewPositionCreateView/  # Create position
+    ├── ProfileView/      # View candidate details
+    └── PositionView/     # View position details
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+---
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+## Routing
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+| Path | Component | Description |
+|------|-----------|-------------|
+| `/` | HomePage | Landing page with CTA |
+| `/info` | InfoPage | Main app (default view) |
+| `/info/profile/create` | NewProfileCreateView | Create new evaluation |
+| `/info/profile/:id` | ProfileView | View candidate profile |
+| `/info/position/create` | NewPositionCreateView | Create new position |
+| `/info/position/:id` | PositionView | View position details |
+
+---
+
+## HomePage
+
+Landing page with project introduction and call-to-action buttons.
+
+**Features:**
+- Project overview
+- Navigation to main application
+- Responsive design
+
+**Location:** `Home/HomePage.tsx`
+
+---
+
+## InfoPage
+
+Main application container with sidebar navigation and content area.
+
+**Layout:**
+```
+┌─────────────────────────────────────────────┐
+│              CustomNavbar                    │
+├──────────┬──────────────────────────────────┤
+│          │                                   │
+│ LeftBar  │         Content Area              │
+│          │   (Routed child components)       │
+│          │                                   │
+└──────────┴──────────────────────────────────┘
+```
+
+**Features:**
+- Persistent sidebar navigation
+- Dynamic content rendering via nested routes
+
+**Location:** `InfoPage/InfoPage.tsx`
+
+---
+
+## LeftBar
+
+Sidebar navigation component.
+
+**Features:**
+- Two tabs: Profiles | Positions
+- Lists of existing items (via ItemList)
+- "Create New" buttons for each section
+
+**Location:** `InfoPage/LeftBar/LeftBar.tsx`
+
+---
+
+## NewProfileCreateView
+
+Form for creating a new candidate evaluation.
+
+**Workflow:**
+1. Select target position from dropdown
+2. Upload candidate documents (PDF, DOCX, CSV, TXT)
+3. View uploaded files list
+4. Submit for AI evaluation
+5. Redirect to ProfileView on success
+
+**API:** `POST /api/v1/ai/generate`
+
+**Location:** `InfoPage/NewProfileCreateView/NewProfileCreateView.tsx`
+
+---
+
+## NewPositionCreateView
+
+Form for creating a new job position.
+
+**Fields:**
+- Position name
+- Dynamic parameters (requirements, skills)
+
+**API:** `POST /api/v1/position/create`
+
+**Location:** `InfoPage/NewPositionCreateView/NewPositionCreateView.tsx`
+
+---
+
+## ProfileView
+
+Displays detailed candidate evaluation profile.
+
+**Sections:**
+- Candidate information (name, contacts, education, experience)
+- Evaluation scores (trust, integrity, leadership, position relevance)
+- Risk analysis flags
+- Summary conclusion
+- Uploaded files with download buttons
+- Export options (JSON, CSV, DOCX, PDF)
+
+**API:** `GET /api/v1/candidate/get/:id`
+
+**Location:** `InfoPage/ProfileVIew/ProfileView.tsx`
+
+---
+
+## PositionView
+
+Displays position details and associated candidates.
+
+**Sections:**
+- Position name
+- Requirements and parameters
+- List of evaluated candidates for this position
+
+**API:** `GET /api/v1/position/get/:id`
+
+**Location:** `InfoPage/PositionView/PositionView.tsx`
+
+---
+
+## State Management
+
+Pages use React hooks for local state management:
+- `useState` for component state
+- `useEffect` for data fetching
+- `useParams` for URL parameters
+- `useNavigate` for programmatic navigation
+
+---
+
+## Data Fetching
+
+Data is fetched using the Axios client from `src/client/client.ts`:
+
+```tsx
+import { client } from '../../client/client';
+
+useEffect(() => {
+  client.get(`/api/v1/candidate/get/${id}`)
+    .then(response => setCandidate(response.data))
+    .catch(error => console.error(error));
+}, [id]);
+```
+
+---
+
+## Internationalization
+
+Pages use `react-i18next` for bilingual support (English/Ukrainian):
+
+```tsx
+import { useTranslation } from 'react-i18next';
+
+const MyPage = () => {
+  const { t } = useTranslation();
+  return <h1>{t('page.title')}</h1>;
+};
 ```

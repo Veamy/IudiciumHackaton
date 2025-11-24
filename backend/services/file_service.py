@@ -1,5 +1,6 @@
 import json
 import os
+from asyncio import to_thread
 from io import BytesIO
 from typing import List
 
@@ -8,7 +9,9 @@ import magic
 from docx import Document
 from fastapi import UploadFile, HTTPException
 
+from core.config import settings
 from models.candidate_file import CandidateFile
+from object_storage.minio_client import minio_client
 from schemas.file_schemas import FileError
 
 ALLOWED_BINARY_TYPES = {
@@ -20,49 +23,49 @@ ALLOWED_BINARY_TYPES = {
 ALLOWED_TEXT_EXTENSIONS = {".txt", ".csv", ".mermaid", ".mmd", ".md", ".json"}
 
 
-async def _process_file(file: UploadFile):
-    file_extension = await _get_file_extension(file)
-    content = await file.read()
-    match file_extension:
-        case ".txt" | ".csv" | ".mermaid" | ".mmd" | ".md":
+async def _process_file(content: bytes, filename: str, content_type = None):
+    if content_type is None:
+        content_type = _get_real_mime_type(content, filename)
+    match content_type:
+        case _ if content_type.startswith("text/"):
             text = content.decode("utf-8")
             return text
-        case ".pdf":
+        case "application/pdf":
             doc = fitz.open(stream=content, filetype="pdf")
             text = "\n".join(page.get_text() for page in doc)
             return text
-        case ".json":
+        case "application/json":
             text = json.loads(content)
             return text
-        case ".docx":
+        case "application/vnd.openxmlformats-officedocument.wordprocessingml.document":
             doc = Document(BytesIO(content))
             text = "\n".join(p.text for p in doc.paragraphs)
             return text
         case _:
             raise HTTPException(
                 status_code=415,
-                detail=f"Unsupported file type: {file_extension}"
+                detail=f"Unsupported file type: {content_type}"
             )
 
 
-async def _get_file_extension(file: UploadFile):
-    await file.seek(0)
-    initial_content = await file.read(2048)
-    await file.seek(0)
-
-    real_mime = magic.from_buffer(initial_content, mime=True)
+def _get_real_mime_type(content: bytes, filename: str):
+    real_mime = magic.from_buffer(content[:2048], mime=True)
     print(f"Debug: MIME detected: {real_mime}")
-
     if real_mime == "application/zip":
-        filename = file.filename
+        filename = filename
         if filename.endswith(".docx"):
-            return ".docx"
+            real_mime = "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+
+    return real_mime
+
+async def _get_file_extension(content: bytes, filename: str):
+    real_mime = _get_real_mime_type(content, filename)
 
     if real_mime in ALLOWED_BINARY_TYPES:
         return ALLOWED_BINARY_TYPES[real_mime]
 
     if real_mime.startswith("text/"):
-        filename = file.filename
+        filename = filename
         _, ext = os.path.splitext(filename)
         ext = ext.lower()
 
@@ -74,6 +77,7 @@ async def _get_file_extension(file: UploadFile):
         detail=f"Unsupported file type: {real_mime}"
     )
 
+
 def get_file_extension_minio(file: CandidateFile):
     if file.content_type.startswith("text/"):
         filename = file.file_name
@@ -83,20 +87,46 @@ def get_file_extension_minio(file: CandidateFile):
         ext = ALLOWED_BINARY_TYPES[file.content_type]
     return ext
 
-async def read_text(files: List[UploadFile]):
+
+async def read_files(files: List[UploadFile]):
     full_text = ""
-    read_files = []
+    processed_files = []
     error_files = []
 
     for i, file in enumerate(files):
         try:
-            text = await _process_file(file)
+            content = await file.read()
+            text = await _process_file(content, file.filename)
             full_text += f"{i}: {text}\n"
 
             await file.seek(0)
-            read_files.append(file)
+            processed_files.append(file)
         except:
             error_file = FileError(file_name=file.filename, reason="Unreadable text")
             error_files.append(error_file)
 
-    return full_text, read_files, error_files
+    return full_text, processed_files, error_files
+
+
+async def read_files_from_minio(files: List[CandidateFile]):
+    full_text = ""
+    processed_files = []
+    error_files = []
+
+    for i, file in enumerate(files):
+        ext = get_file_extension_minio(file)
+        minio_file = await to_thread(minio_client.get_object,settings.MINIO_BUCKET, str(file.id) + ext)
+        try:
+            content = minio_file.read()
+            text = await _process_file(content, file.file_name, file.content_type)
+            full_text += f"{i}: {text}\n"
+
+            processed_files.append(file)
+        except:
+            error_file = FileError(file_name=file.file_name, reason="Unreadable text")
+            error_files.append(error_file)
+
+    return full_text, processed_files, error_files
+
+
+

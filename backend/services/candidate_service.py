@@ -1,9 +1,11 @@
 from asyncio import to_thread, gather
+from typing import List
 from uuid import UUID
 
 from fastapi import HTTPException
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
+from starlette.datastructures import UploadFile
 
 from core.config import settings
 from models.candidate_profile import CandidateProfile
@@ -25,10 +27,24 @@ async def get_candidate_by_id(candidate_id: UUID, session: AsyncSession):
     return candidate
 
 
+async def create_candidate(profile_data, candidate_files: List[UploadFile], position_id: UUID, session: AsyncSession):
+    profile = CandidateProfile(profile=profile_data, files=candidate_files, position_id=position_id)
+    session.add(profile)
+    await session.commit()
+    await session.refresh(profile)
+    return profile
+
+
+async def update_candidate_profile(candidate_id: UUID, profile_data, session: AsyncSession):
+    candidate = await get_candidate_by_id(candidate_id, session)
+    candidate.profile = profile_data
+    session.add(candidate)
+    await session.commit()
+    await session.refresh(candidate)
+    return candidate
+
 async def delete_candidate_by_id(candidate_id: UUID, session: AsyncSession):
-    candidate = await session.get(CandidateProfile, candidate_id)
-    if not candidate:
-        raise HTTPException(status_code=404, detail="Candidate not found")
+    candidate = await get_candidate_by_id(candidate_id, session)
 
     minio_tasks = []
 

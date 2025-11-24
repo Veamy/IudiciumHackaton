@@ -9,3 +9,6 @@ class RequestToAI(BaseModel):
     stream: bool
     format: str
     options: dict[str, Any]
+
+class RefreshRequest(BaseModel):
+    prompt: str
