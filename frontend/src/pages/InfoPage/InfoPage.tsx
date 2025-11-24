@@ -34,7 +34,7 @@ export const InfoPage = () => {
       }
     }
     
-    return <h1 style={{ padding: 'var(--gap)', color: 'var(--alert)' }}>{FALLBACK_MESSAGE}</h1>;
+    return <></>;
   };
 
   return (
